@@ -1,24 +1,19 @@
-import pandas as pd
-import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+import numpy as np
 
 def train_model():
-    # Load dataset
-    df = pd.read_csv('data.csv')
+    # Simple model that adds two numbers
+    model = Sequential([
+        Dense(10, input_shape=(2,), activation='relu'),
+        Dense(1)
+    ])
+    
+    # Fake training data (just for demonstration)
+    x_train = np.array([[1, 2], [3, 4], [5, 6]])
+    y_train = np.sum(x_train, axis=1)
 
-    # Inputs and outputs
-    x = df[['Feature1', 'Feature2']].values
-    y = df[['Output']].values
-
-    # Build improved model
-    model = Sequential()
-    model.add(Dense(32, input_dim=2, activation='linear'))  # try 'linear' instead of 'relu'
-    model.add(Dense(16, activation='relu'))
-    model.add(Dense(1))  # output
-
-    # Compile and train
     model.compile(optimizer='adam', loss='mean_squared_error')
-    model.fit(x, y, epochs=1000, verbose=0)  # train longer
+    model.fit(x_train, y_train, epochs=10, verbose=0)
 
     return model
